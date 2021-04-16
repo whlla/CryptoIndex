@@ -8,3 +8,5 @@ server/.idea/
 .DS_Store
 
 db/mongo-volume/
+
+.idea/

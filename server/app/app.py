@@ -57,7 +57,7 @@ security = Security(app, user_datastore)
 # Create user to test
 @app.before_first_request
 def create_user():
-    user_datastore.create_user(email='eagidawhale@gmail.com', password=hash_password("test1234"))
+    user_datastore.create_user(email='email@gmail.com', password=hash_password("test1234"))
 
 
 @app.route('/')
