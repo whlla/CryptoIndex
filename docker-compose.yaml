@@ -1,0 +1,62 @@
+version: "2"
+
+services:
+  tor:
+    image: goldy/tor-hidden-service:0.3.5.8
+    links:
+      - backend
+    environment:
+        # # Set mapping ports
+        # SERVICE1_TOR_SERVICE_HOSTS: 80:backend:3000
+        # # Set private key
+        # SERVICE1_TOR_SERVICE_KEY: |
+        #     -----BEGIN RSA PRIVATE KEY-----
+        #     MIICXAIBAAKBgQCgEixo6uFKsaAf6HECxuvsZFYbxRVgdvbnEstn721qcjZmkyJw
+        #     o09klGpgoOPutuEbpKSE3v2w1YTbqYgQa9I+7rn2kOa+b/b2nPEyqGItmWQJU3MD
+        #     KICye0BchcbX4Dtw85fuumenuc8h2tx0hfXkTDkzsD1fQaQct0s4ZYb1twIDAoBv
+        #     AoGABXKMkZVq9lXa185YB46zCuuQRhGLUzK/IIpycD085lI/b6lG9IpciRh5PMSq
+        #     IM03JOuWsIlZAdS3W9ngyDeiVU7b7WaicwledI++cuSs0aWcPNSM93sJGXMAvzsN
+        #     T5F9XBFEIWVRoU1F8/gjOPaPxJv6bMzzuiWUfTHta8hBRSsCQQDNo8eMOZmQyuxf
+        #     y0zq7ednUTvRfHZSLd6SZMYNd5JpoPFCuH7hntipmOs7mChPHSjQdPY31jTOWtVD
+        #     j6Iep+p9AkEAx0WKXmqRTPWD8jOl2UuqhT1SKiQSy5UrnJFgt360a1E5R9tf+1Vc
+        #     vfkWJ5OBUXdajF32+D7VTvJccEJqphOjQwJBAJ5pSKErhFsipLFMYEaRSomjeJ+R
+        #     VNikY1FLfEjCj6rPcKY1XvAtR+8Yti6fAqGxBTFaIExzHIAocEw5N7uxdTMCQEyg
+        #     1bJcwQTL9Ji0qHbYPR2qMsUt4GnJQcXxeTIW4nAcUGPxP3IZth/6LMUSC+j9+jWp
+        #     XQhL3U4X2RpoBwPiPUMCQC7C6S3MBetopQiWHwjqhN97FuvcOlC5/SoiX0xB4jJ+
+        #     +cE5Lpwl+NBEdN8gYsTcf8fj9Ej2X06wbpyvG9p1L5Y=
+        #     -----END RSA PRIVATE KEY-----
+
+        # hello and again will share the same onion v3 address
+        SERVICE2_TOR_SERVICE_HOSTS: 80:backend:5000
+        SERVICE2_TOR_SERVICE_VERSION: '3'
+        # tor v3 address private key base 64 encoded
+        # SERVICE2_TOR_SERVICE_KEY: |
+        #     PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAACArobDQYyZAWXei4QZwr++
+        #     j96H1X/gq14NwLRZ2O5DXuL0EzYKkdhZSILY85q+kfwZH8z4ceqe7u1F+0pQi/sM
+
+  backend:
+    build: ./server
+    # build: 
+    #   context: server
+    #   dockerfile: server/Dockerfile
+    # volumes: 
+    #   - .:/app
+    links:
+      - database
+    depends_on:
+      - database
+    ports:
+      - "5000:5000"
+
+  database:
+    image: "mongo"
+    environment:
+      MONGO_INITDB_DATABASE: crypto
+      MONGO_INITDB_ROOT_USERNAME: cryptoUser
+      MONGO_INITDB_ROOT_PASSWORD: 97sdfhassdf34s
+    volumes: 
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./db/mongo-volume:/data/db
+      - ./db/log/:/var/log/mongodb/
+    ports:
+      - '27017-27019:27017-27019'

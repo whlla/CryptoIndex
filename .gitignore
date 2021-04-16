@@ -1,0 +1,10 @@
+
+server/venv/
+
+server/__pycache__/
+
+server/.idea/
+
+.DS_Store
+
+db/mongo-volume/
