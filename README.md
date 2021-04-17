@@ -58,6 +58,7 @@ This is a placeholder repo, meaning name and other aspects could change at anyti
 2. From project directory run `docker-compose up`
 3. Find Tor address in Tor logs
 4. Log in with user: email@gmail.com pass: test1234
+5. Flutter UI is at http://localhost:808/
 
 ### Prerequisites
 
