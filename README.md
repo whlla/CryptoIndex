@@ -60,6 +60,10 @@ This is a placeholder repo, meaning name and other aspects could change at anyti
 4. Log in with user: email@gmail.com pass: test1234
 5. Flutter UI is at http://localhost:808/
 
+Connecting to Tor:
+- Tor browser
+- Tor VPN such as Orbot, to use existing browsers
+
 ### Prerequisites
 
 TBD
