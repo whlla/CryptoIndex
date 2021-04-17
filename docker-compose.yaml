@@ -34,6 +34,8 @@ services:
         #     PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAACArobDQYyZAWXei4QZwr++
         #     j96H1X/gq14NwLRZ2O5DXuL0EzYKkdhZSILY85q+kfwZH8z4ceqe7u1F+0pQi/sM
 
+        # TODO: add another service for serving frontend
+
   backend:
     build: ./server
     # build: 
@@ -41,6 +43,8 @@ services:
     #   dockerfile: server/Dockerfile
     # volumes: 
     #   - .:/app
+
+    # TODO: add environment variables for API credentials
     links:
       - database
     depends_on:
@@ -60,3 +64,14 @@ services:
       - ./db/log/:/var/log/mongodb/
     ports:
       - '27017-27019:27017-27019'
+
+  ui:
+    build: ./frontend
+    links:
+      - backend
+    depends_on:
+      - backend
+    ports:
+      - "808:4040"
+#    environment:
+#   TODO: eventully need to add DB and API credentials here
