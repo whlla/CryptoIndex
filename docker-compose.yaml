@@ -35,6 +35,8 @@ services:
         #     j96H1X/gq14NwLRZ2O5DXuL0EzYKkdhZSILY85q+kfwZH8z4ceqe7u1F+0pQi/sM
 
         # TODO: add another service for serving frontend
+        SERVICE3_TOR_SERVICE_HOSTS: 80:ui:4040
+        SERVICE3_TOR_SERVICE_VERSION: '3'
 
   backend:
     build: ./server
@@ -63,12 +65,13 @@ services:
       - ./db/mongo-volume:/data/db
       - ./db/log/:/var/log/mongodb/
     ports:
-      - '27017-27019:27017-27019'
+      - '27020-27022:27017-27019'
 
   ui:
     build: ./frontend
     links:
       - backend
+      - tor
     depends_on:
       - backend
     ports:
