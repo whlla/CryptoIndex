@@ -51,6 +51,8 @@ The project is currently in development. Will update once it is at a point ready
 * [Docker](https://www.docker.com/)
 * [Tor](https://www.torproject.org/)
 * [Python3](https://www.python.org/)
+* [MongoDB](https://www.mongodb.com/)
+* [Flutter](https://flutter.dev/)
 
 
 <!-- GETTING STARTED -->
