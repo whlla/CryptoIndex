@@ -44,6 +44,8 @@ Creating and maintaining a cryptocurrency index should be simple, free and under
 
 This is a placeholder repo, meaning name and other aspects could change at anytime. Star this project or join our Telegram for future updates.
 
+The project is currently in development. Will update once it is at a point ready for testing or use.
+
 ### Built With
 
 * [Docker](https://www.docker.com/)
