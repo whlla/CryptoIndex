@@ -26,6 +26,8 @@ app.config['SECURITY_PASSWORD_SALT'] = os.environ.get("SECURITY_PASSWORD_SALT", 
 #     'password': 'cryptotestpls'
 # }
 
+mongoClient = MongoClient('mongodb://crpytoRW:cryptotestpls@database:27017/crypto')
+
 app.config['MONGODB_SETTINGS'] = {
     'db': 'crypto',
     'host': "mongodb://crpytoRW:cryptotestpls@database:27017/crypto"
@@ -33,6 +35,12 @@ app.config['MONGODB_SETTINGS'] = {
 # app.config['MONGO_HOST'] = "mongodb://crpytoRW:cryptotestpls@database:27017/crypto"
 
 db = MongoEngine(app)
+
+def user_exists(email):
+    user_doc = mongoClient.get_database('crypto').get_collection('user').find_one({'email': email})
+    if user_doc:
+        return True
+    return False
 
 
 class Role(db.Document, RoleMixin):
@@ -57,7 +65,8 @@ security = Security(app, user_datastore)
 # Create user to test
 @app.before_first_request
 def create_user():
-    user_datastore.create_user(email='email@gmail.com', password=hash_password("test1234"))
+    if not user_exists('buildtest@gmail.com'):
+        user_datastore.create_user(email='buildtest@gmail.com', password=hash_password("test1234"))
 
 
 @app.route('/')
